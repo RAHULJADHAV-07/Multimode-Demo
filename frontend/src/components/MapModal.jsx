@@ -581,32 +581,32 @@ const MapModal = ({ route, isOpen, onClose, origin, destination }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-2 sm:p-4 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-7xl h-[95vh] sm:h-[90vh] flex flex-col overflow-hidden animate-slideUp">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-0 sm:p-4 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-white rounded-none sm:rounded-2xl shadow-2xl w-full h-full sm:max-w-7xl sm:h-[90vh] flex flex-col overflow-hidden animate-slideUp">
         {/* Mobile-Optimized Modal Header */}
         <div className="relative p-3 sm:p-6 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 text-white">
           <div className="absolute inset-0 bg-black bg-opacity-10"></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <div className="p-2 sm:p-3 bg-white bg-opacity-20 rounded-xl backdrop-blur-sm">
+              <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
+                <div className="p-2 sm:p-3 bg-white bg-opacity-20 rounded-xl backdrop-blur-sm flex-shrink-0">
                   <span className="text-lg sm:text-2xl">🗺️</span>
                 </div>
-                <div>
-                  <h2 className="text-sm sm:text-2xl font-bold">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-sm sm:text-2xl font-bold truncate">
                     Route Map
-                    <span className="ml-2 px-2 py-1 bg-white bg-opacity-20 rounded-full text-xs font-medium backdrop-blur-sm">
+                    <span className="hidden sm:inline ml-2 px-2 py-1 bg-white bg-opacity-20 rounded-full text-xs font-medium backdrop-blur-sm">
                       {route?.route_type}
                     </span>
                   </h2>
-                  <div className="text-xs sm:text-sm text-blue-100 mt-1">
-                    <span className="truncate">{origin}</span> → <span className="truncate">{destination}</span>
+                  <div className="text-xs sm:text-sm text-blue-100 mt-1 truncate">
+                    {origin} → {destination}
                   </div>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors"
+                className="p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors flex-shrink-0"
               >
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -615,22 +615,22 @@ const MapModal = ({ route, isOpen, onClose, origin, destination }) => {
             </div>
             
             {/* Mobile-friendly Quick Stats */}
-            <div className="grid grid-cols-4 gap-2 mt-3 sm:hidden">
+            <div className="grid grid-cols-4 gap-1 sm:gap-2 mt-3 sm:hidden">
               <div className="text-center">
-                <div className="text-sm font-bold">{route?.duration}m</div>
-                <div className="text-xs text-blue-200">Time</div>
+                <div className="text-xs sm:text-sm font-bold">{route?.duration}m</div>
+                <div className="text-[10px] sm:text-xs text-blue-200">Time</div>
               </div>
               <div className="text-center">
-                <div className="text-sm font-bold">₹{route?.cost}</div>
-                <div className="text-xs text-blue-200">Cost</div>
+                <div className="text-xs sm:text-sm font-bold">₹{route?.cost}</div>
+                <div className="text-[10px] sm:text-xs text-blue-200">Cost</div>
               </div>
               <div className="text-center">
-                <div className="text-sm font-bold">{route?.transfers}</div>
-                <div className="text-xs text-blue-200">Transfer</div>
+                <div className="text-xs sm:text-sm font-bold">{route?.transfers}</div>
+                <div className="text-[10px] sm:text-xs text-blue-200">Transfer</div>
               </div>
               <div className="text-center">
-                <div className="text-sm font-bold text-green-300">{route?.eco_score}/10</div>
-                <div className="text-xs text-blue-200">Eco</div>
+                <div className="text-xs sm:text-sm font-bold text-green-300">{route?.eco_score}/10</div>
+                <div className="text-[10px] sm:text-xs text-blue-200">Eco</div>
               </div>
             </div>
             
@@ -657,7 +657,7 @@ const MapModal = ({ route, isOpen, onClose, origin, destination }) => {
         </div>
 
         {/* Map Container */}
-        <div className="flex-1 relative" style={{ minHeight: '500px' }}>
+        <div className="flex-1 relative min-h-0">
           {mapLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
               <div className="text-center">
@@ -667,65 +667,64 @@ const MapModal = ({ route, isOpen, onClose, origin, destination }) => {
               </div>
             </div>
           )}
-          <div ref={mapRef} className="w-full h-full" style={{ minHeight: '500px', zIndex: 1 }}></div>
+          <div ref={mapRef} className="w-full h-full"></div>
           
-          {/* Enhanced Map Legend */}
-          <div className="absolute bottom-3 sm:bottom-6 left-3 sm:left-6 bg-white bg-opacity-95 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl border border-gray-200 z-10 min-w-60 sm:min-w-64 max-w-[90vw] sm:max-w-none">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-base sm:text-lg font-bold text-gray-800 flex items-center">
-                <span className="mr-2">🧭</span>
-                Legend
+          {/* Enhanced Map Legend - Optimized for mobile */}
+          <div className="absolute bottom-2 sm:bottom-6 left-2 sm:left-6 bg-white bg-opacity-95 backdrop-blur-md rounded-lg sm:rounded-2xl p-2 sm:p-4 shadow-xl border border-gray-200 z-10 text-xs sm:text-base max-w-[45vw] sm:max-w-none">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <h4 className="text-xs sm:text-lg font-bold text-gray-800 flex items-center">
+                <span className="mr-1 sm:mr-2">🧭</span>
+                <span className="hidden sm:inline">Legend</span>
               </h4>
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-1 sm:space-y-3">
               {/* Location Markers */}
-              <div className="space-y-2">
+              <div className="space-y-1 sm:space-y-2">
                 <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Locations</div>
-                <div className="grid grid-cols-1 gap-2">
-                  <div className="flex items-center justify-between p-2 bg-green-50 rounded-lg">
-                    <div className="flex items-center">
-                      <span className="mr-3 text-lg">🚀</span>
-                      <span className="text-sm font-medium text-gray-800">Start Point</span>
+                <div className="grid grid-cols-1 gap-1 sm:gap-2">
+                  <div className="flex items-center justify-between p-1 sm:p-2 bg-green-50 rounded-lg">
+                    <div className="flex items-center min-w-0">
+                      <span className="mr-1 sm:mr-3 text-base sm:text-lg flex-shrink-0">🚀</span>
+                      <span className="text-[10px] sm:text-sm font-medium text-gray-800 truncate">Start</span>
                     </div>
-                    <span className="text-xs text-green-600 font-medium">{origin}</span>
+                    <span className="text-[9px] sm:text-xs text-green-600 font-medium truncate ml-1">{origin}</span>
                   </div>
-                  <div className="flex items-center justify-between p-2 bg-red-50 rounded-lg">
-                    <div className="flex items-center">
-                      <span className="mr-3 text-lg">🎯</span>
-                      <span className="text-sm font-medium text-gray-800">Destination</span>
+                  <div className="flex items-center justify-between p-1 sm:p-2 bg-red-50 rounded-lg">
+                    <div className="flex items-center min-w-0">
+                      <span className="mr-1 sm:mr-3 text-base sm:text-lg flex-shrink-0">🎯</span>
+                      <span className="text-[10px] sm:text-sm font-medium text-gray-800 truncate">End</span>
                     </div>
-                    <span className="text-xs text-red-600 font-medium">{destination}</span>
+                    <span className="text-[9px] sm:text-xs text-red-600 font-medium truncate ml-1">{destination}</span>
                   </div>
-                  <div className="flex items-center justify-between p-2 bg-orange-50 rounded-lg">
+                  <div className="flex items-center justify-between p-1 sm:p-2 bg-orange-50 rounded-lg">
                     <div className="flex items-center">
-                      <span className="mr-3 text-lg">🔄</span>
-                      <span className="text-sm font-medium text-gray-800">Transfer</span>
+                      <span className="mr-1 sm:mr-3 text-base sm:text-lg">🔄</span>
+                      <span className="text-[10px] sm:text-sm font-medium text-gray-800">Transfer</span>
                     </div>
-                    <span className="text-xs text-orange-600 font-medium">Change Mode</span>
                   </div>
                 </div>
               </div>
               
               {/* Transport Modes */}
-              <div className="space-y-2">
-                <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Transport Modes</div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center p-2 bg-gray-50 rounded-lg">
-                    <div className="w-4 h-2 bg-green-500 rounded-sm mr-2" style={{borderStyle: 'dashed', borderWidth: '1px'}}></div>
-                    <span className="text-xs font-medium">Walking</span>
+              <div className="space-y-1 sm:space-y-2">
+                <div className="text-[9px] sm:text-xs font-semibold text-gray-600 uppercase tracking-wide hidden sm:block">Transport Modes</div>
+                <div className="grid grid-cols-2 gap-1 sm:gap-2">
+                  <div className="flex items-center p-1 sm:p-2 bg-gray-50 rounded-lg">
+                    <div className="w-3 h-1 sm:w-4 sm:h-2 bg-green-500 rounded-sm mr-1 sm:mr-2 flex-shrink-0" style={{borderStyle: 'dashed', borderWidth: '1px'}}></div>
+                    <span className="text-[9px] sm:text-xs font-medium">Walk</span>
                   </div>
-                  <div className="flex items-center p-2 bg-gray-50 rounded-lg">
-                    <div className="w-4 h-2 bg-orange-500 rounded-sm mr-2"></div>
-                    <span className="text-xs font-medium">Bus</span>
+                  <div className="flex items-center p-1 sm:p-2 bg-gray-50 rounded-lg">
+                    <div className="w-3 h-1 sm:w-4 sm:h-2 bg-orange-500 rounded-sm mr-1 sm:mr-2 flex-shrink-0"></div>
+                    <span className="text-[9px] sm:text-xs font-medium">Bus</span>
                   </div>
-                  <div className="flex items-center p-2 bg-gray-50 rounded-lg">
-                    <div className="w-4 h-2 bg-blue-500 rounded-sm mr-2"></div>
-                    <span className="text-xs font-medium">Train</span>
+                  <div className="flex items-center p-1 sm:p-2 bg-gray-50 rounded-lg">
+                    <div className="w-3 h-1 sm:w-4 sm:h-2 bg-blue-500 rounded-sm mr-1 sm:mr-2 flex-shrink-0"></div>
+                    <span className="text-[9px] sm:text-xs font-medium">Train</span>
                   </div>
-                  <div className="flex items-center p-2 bg-gray-50 rounded-lg">
-                    <div className="w-4 h-2 bg-purple-500 rounded-sm mr-2"></div>
-                    <span className="text-xs font-medium">Metro</span>
+                  <div className="flex items-center p-1 sm:p-2 bg-gray-50 rounded-lg">
+                    <div className="w-3 h-1 sm:w-4 sm:h-2 bg-purple-500 rounded-sm mr-1 sm:mr-2 flex-shrink-0"></div>
+                    <span className="text-[9px] sm:text-xs font-medium">Metro</span>
                   </div>
                 </div>
               </div>

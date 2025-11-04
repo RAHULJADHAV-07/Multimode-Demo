@@ -162,40 +162,35 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Header */}
       <header className="bg-gradient-to-r from-green-500 to-blue-600 shadow-lg border-b">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           {/* Main Header Row */}
-          <div className="flex items-center justify-between h-20">
-            {/* Logo and Brand */}
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center">
-                <img 
-                  src={yatriLogo} 
-                  alt="Yatri Logo" 
-                  className="h-12 w-auto object-contain"
-                />
-                <div className="ml-3">
-                  <h1 className="text-2xl font-bold text-white">Yatri</h1>
-                  <p className="text-sm text-green-100 font-medium">Smart Journey Planner</p>
-                </div>
-              </div>
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo Only */}
+            <div className="flex items-center">
+              <img 
+                src={yatriLogo} 
+                alt="Yatri Logo" 
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
             </div>
 
-            {/* Network Status & Stats */}
-            <div className="hidden md:flex items-center space-x-6">
-              <div className="flex items-center space-x-4">
+            {/* Network Status & Stats - Show on all screen sizes */}
+            <div className="flex items-center space-x-2 md:space-x-6">
+              <div className="flex items-center">
                 <div className="text-right">
                   <div className="text-sm font-semibold text-white">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white bg-opacity-20 text-white">
-                      <span className={`w-2 h-2 rounded-full mr-2 ${stations.length > 0 ? 'bg-green-300 animate-pulse' : 'bg-yellow-300 animate-bounce'}`}></span>
-                      {stations.length > 0 ? `${stations.length} stations loaded` : 'Loading stations...'}
+                    <span className="inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs font-medium bg-white bg-opacity-20 text-white">
+                      <span className={`w-2 h-2 rounded-full mr-1 md:mr-2 ${stations.length > 0 ? 'bg-green-300 animate-pulse' : 'bg-yellow-300 animate-bounce'}`}></span>
+                      <span className="hidden sm:inline">{stations.length > 0 ? `${stations.length} stations loaded` : 'Loading stations...'}</span>
+                      <span className="sm:hidden">{stations.length > 0 ? `${stations.length} stations` : 'Loading...'}</span>
                     </span>
                   </div>
-                  <p className="text-xs text-green-200 mt-1">Mumbai Transit Network</p>
+                  <p className="text-xs text-green-200 mt-1 hidden md:block">Mumbai Transit Network</p>
                 </div>
               </div>
               
-              {/* Feature Pills */}
-              <div className="flex items-center space-x-2">
+              {/* Feature Pills - Desktop only */}
+              <div className="hidden md:flex items-center space-x-2">
                 <div className="flex items-center px-3 py-1.5 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-full">
                   <span className="text-green-200 text-sm mr-1">🌱</span>
                   <span className="text-xs font-medium text-white">Eco-First</span>
@@ -206,38 +201,29 @@ function App() {
                 </div>
               </div>
             </div>
-
-            {/* Mobile Menu Button (for future use) */}
-            <div className="md:hidden">
-              <button className="p-2 rounded-lg text-white hover:text-green-200 hover:bg-white hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
           </div>
 
           {/* Sub-header with tagline */}
-          <div className="border-t border-white border-opacity-20 py-3">
+          <div className="border-t border-white border-opacity-20 py-2 sm:py-3">
             <div className="flex flex-col sm:flex-row items-center justify-between">
-              <div className="flex items-center space-x-6 text-sm text-green-200">
-                <div className="flex items-center">
+              <div className="flex items-center space-x-3 sm:space-x-6 text-xs sm:text-sm text-green-200 overflow-x-auto">
+                <div className="flex items-center whitespace-nowrap">
                   <span className="text-green-200 mr-1">🚶</span>
-                  <span>Walking</span>
+                  <span className="hidden sm:inline">Walking</span>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center whitespace-nowrap">
                   <span className="text-blue-200 mr-1">🚇</span>
-                  <span>Metro</span>
+                  <span className="hidden sm:inline">Metro</span>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center whitespace-nowrap">
                   <span className="text-purple-500 mr-1">🚂</span>
-                  <span>Train</span>
+                  <span className="hidden sm:inline">Train</span>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center whitespace-nowrap">
                   <span className="text-orange-200 mr-1">🚌</span>
-                  <span>Bus</span>
+                  <span className="hidden sm:inline">Bus</span>
                 </div>
-                <div className="hidden sm:flex items-center">
+                <div className="hidden sm:flex items-center whitespace-nowrap">
                   <span className="text-emerald-200 mr-1">♻️</span>
                   <span>Sustainable Travel</span>
                 </div>
@@ -315,7 +301,7 @@ function App() {
               <img src={yatriLogo} alt="Yatri" className="h-8 w-auto object-contain" />
               <div>
                 <div className="text-sm font-semibold text-gray-800">
-                  © 2024 Yatri - Empowering sustainable commuting in Mumbai
+                  © 2025 Yatri - Empowering sustainable commuting in Mumbai
                 </div>
               </div>
             </div>

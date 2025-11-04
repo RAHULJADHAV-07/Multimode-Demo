@@ -103,16 +103,16 @@ const RouteSearch = ({ onRouteSearch, stations, loading }) => {
   
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-      <div className="bg-gradient-to-r from-green-500 to-blue-600 p-4 sm:p-6 text-white">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2 flex items-center">
-          <span className="mr-2 sm:mr-3">🌱</span>
-          Eco-Friendly Journey Planner
+      <div className="bg-gradient-to-r from-green-500 to-blue-600 p-3 sm:p-6 text-white">
+        <h2 className="text-base sm:text-2xl font-bold mb-2 flex items-center">
+          <span className="mr-2 sm:mr-3 text-lg sm:text-2xl">🌱</span>
+          <span className="truncate">Eco-Friendly Journey Planner</span>
         </h2>
-        <p className="text-green-100 text-xs sm:text-sm">
+        <p className="text-green-100 text-[10px] sm:text-sm leading-tight sm:leading-normal">
           Sustainable travel with minimal transfers • Walking • Public Transit • Green Routes
         </p>
       </div>
-      <div className="p-4 sm:p-6">
+      <div className="p-3 sm:p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="relative">
@@ -232,23 +232,24 @@ const RouteSearch = ({ onRouteSearch, stations, loading }) => {
           </div>
 
           {/* Route Features */}
-          <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
-            <div className="flex items-center justify-center space-x-6 text-sm text-gray-700">
-              <div className="flex items-center space-x-2">
-                <span className="text-lg">🌱</span>
-                <span>Eco-Friendly</span>
+          <div className="p-3 sm:p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+            <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-6 text-xs sm:text-sm text-gray-700">
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <span className="text-base sm:text-lg">🌱</span>
+                <span className="whitespace-nowrap">Eco-Friendly</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-lg">⚡</span>
-                <span>Fastest</span>
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <span className="text-base sm:text-lg">⚡</span>
+                <span className="whitespace-nowrap">Fastest</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-lg">💰</span>
-                <span>Cheapest</span>
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <span className="text-base sm:text-lg">💰</span>
+                <span className="whitespace-nowrap">Cheapest</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-lg">🔄</span>
-                <span>Fewest Transfers</span>
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <span className="text-base sm:text-lg">🔄</span>
+                <span className="whitespace-nowrap hidden sm:inline">Fewest Transfers</span>
+                <span className="whitespace-nowrap sm:hidden">Few Transfers</span>
               </div>
             </div>
           </div>
