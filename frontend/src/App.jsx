@@ -4,7 +4,7 @@ import RouteResults from './components/RouteResults';
 import yatriLogo from './assets/yatri-removebg-preview.png';
 import './App.css';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://multimode-demo.onrender.com/api/stations';
 
 // Simple fetch wrapper to replace axios
 const api = {
@@ -44,7 +44,7 @@ function App() {
 
   const loadStations = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/stations');
+      const response = await fetch('https://multimode-demo.onrender.com/api/stations/stations');
       const data = await response.json();
       
       if (data.success && Array.isArray(data.stations)) {
@@ -84,7 +84,7 @@ function App() {
         filters: filters // Include the new filters
       };
 
-      const response = await fetch('http://localhost:5000/api/plan', {
+      const response = await fetch('https://multimode-demo.onrender.com/api/stations/plan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
