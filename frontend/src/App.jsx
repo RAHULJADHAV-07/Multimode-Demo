@@ -4,7 +4,8 @@ import RouteResults from './components/RouteResults';
 import yatriLogo from './assets/yatri-removebg-preview.png';
 import './App.css';
 
-const API_BASE_URL = 'https://multimode-demo.onrender.com/api';
+const API_BASE_URL = 'http://localhost:5000/api';
+// For production, use: 'https://multimode-demo.onrender.com/api'
 
 // Simple fetch wrapper to replace axios
 const api = {
@@ -62,7 +63,7 @@ function App() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
       
-      const response = await fetch('https://multimode-demo.onrender.com/api/stations', {
+      const response = await fetch('http://localhost:5000/api/stations', {
         signal: controller.signal
       });
       clearTimeout(timeoutId);
@@ -120,7 +121,7 @@ function App() {
         filters: filters // Include the new filters
       };
 
-      const response = await fetch('https://multimode-demo.onrender.com/api/plan', {
+      const response = await fetch('http://localhost:5000/api/plan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
