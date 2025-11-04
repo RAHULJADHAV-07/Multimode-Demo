@@ -1,0 +1,14 @@
+services:
+  # Backend API Service
+  - type: web
+    name: yatri-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: PORT
+        value: 5000
+    healthCheckPath: /api/health
