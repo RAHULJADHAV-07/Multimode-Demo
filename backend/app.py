@@ -7,7 +7,17 @@ import json
 import time
 
 app = Flask(__name__)
-CORS(app)
+
+# Configure CORS to allow requests from any origin (for development and deployed frontend)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["*"],
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"],
+        "expose_headers": ["Content-Type"],
+        "supports_credentials": False
+    }
+})
 
 # Initialize services
 route_optimizer = RouteOptimizer()

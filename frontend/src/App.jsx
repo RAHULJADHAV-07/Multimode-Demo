@@ -4,7 +4,7 @@ import RouteResults from './components/RouteResults';
 import yatriLogo from './assets/yatri-removebg-preview.png';
 import './App.css';
 
-const API_BASE_URL = 'https://multimode-demo.onrender.com/api/stations';
+const API_BASE_URL = 'https://multimode-demo.onrender.com/api';
 
 // Simple fetch wrapper to replace axios
 const api = {
@@ -40,21 +40,57 @@ function App() {
   // Load stations on app start
   useEffect(() => {
     loadStations();
+    
+    // Retry loading stations if it fails (for Render free tier wake-up)
+    const retryInterval = setInterval(() => {
+      if (stations.length === 0) {
+        console.log('🔄 Retrying station load...');
+        loadStations();
+      } else {
+        clearInterval(retryInterval);
+      }
+    }, 10000); // Retry every 10 seconds
+    
+    return () => clearInterval(retryInterval);
   }, []);
 
   const loadStations = async () => {
     try {
-      const response = await fetch('https://multimode-demo.onrender.com/api/stations/stations');
+      console.log('🔄 Fetching stations from API...');
+      console.log('⏰ Note: Render free tier may take 30-60 seconds to wake up...');
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
+      
+      const response = await fetch('https://multimode-demo.onrender.com/api/stations', {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      console.log('📡 Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('📦 Received data:', data);
       
       if (data.success && Array.isArray(data.stations)) {
         setStations(data.stations);
-        console.log(`Loaded ${data.stations.length} stations`);
+        console.log(`✅ Loaded ${data.stations.length} stations`);
       } else {
-        console.error('Invalid stations data:', data);
+        console.error('❌ Invalid stations data format:', data);
+        setError('Failed to load stations. Invalid data format.');
       }
     } catch (error) {
-      console.error('Error loading stations:', error);
+      if (error.name === 'AbortError') {
+        console.error('❌ Request timeout - backend may be sleeping');
+        setError('Backend is waking up... Please refresh the page in 30 seconds.');
+      } else {
+        console.error('❌ Error loading stations:', error);
+        setError(`Failed to load stations: ${error.message}`);
+      }
     }
   };
 
@@ -84,7 +120,7 @@ function App() {
         filters: filters // Include the new filters
       };
 
-      const response = await fetch('https://multimode-demo.onrender.com/api/stations/plan', {
+      const response = await fetch('https://multimode-demo.onrender.com/api/plan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,8 +185,8 @@ function App() {
                 <div className="text-right">
                   <div className="text-sm font-semibold text-white">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white bg-opacity-20 text-white">
-                      <span className="w-2 h-2 bg-green-300 rounded-full mr-2 animate-pulse"></span>
-                      {stations.length} stations loaded
+                      <span className={`w-2 h-2 rounded-full mr-2 ${stations.length > 0 ? 'bg-green-300 animate-pulse' : 'bg-yellow-300 animate-bounce'}`}></span>
+                      {stations.length > 0 ? `${stations.length} stations loaded` : 'Loading stations...'}
                     </span>
                   </div>
                   <p className="text-xs text-green-200 mt-1">Mumbai Transit Network</p>
@@ -193,7 +229,7 @@ function App() {
                   <span>Metro</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="text-purple-500 mr-1">�</span>
+                  <span className="text-purple-500 mr-1">🚂</span>
                   <span>Train</span>
                 </div>
                 <div className="flex items-center">
